@@ -1,75 +1,67 @@
-# React + TypeScript + Vite
+# 03-react-movies
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Додаток для пошуку фільмів, створений на React та TypeScript. Шукайте фільми за ключовими словами, переглядайте результати у вигляді галереї постерів та відкривайте будь-який фільм у модальному вікні, щоб переглянути детальнішу інформацію. Дані про фільми надходять із [API TMDB](https://www.themoviedb.org/).
 
-Currently, two official plugins are available:
+**Демо:** https://03-react-movies-phi-silk.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Функції
 
-## React Compiler
+- Пошук фільмів за ключовим словом (форма обробляється за допомогою React Form Actions)
+- Спливаючі сповіщення у разі порожнього запиту та при відсутності результатів (React Hot Toast)
+- Стан завантаження та помилки відображаються замість галереї
+- Модальне вікно з фільмами відображається через портал; закривається за допомогою кнопки «×», клавіші `Esc` або кліка по фону
+- Прокрутка сторінки заблокована, поки модальне вікно відкрите
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Технології
 
-## Expanding the ESLint configuration
+- [Vite](https://vite.dev/) + React + TypeScript
+- [axios](https://axios-http.com/) for HTTP requests
+- [React Hot Toast](https://react-hot-toast.com/)
+- CSS Modules + [modern-normalize](https://github.com/sindresorhus/modern-normalize)
+- Prettier + ESLint
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Запуск
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Склонуйте репозиторій та встановіть залежності:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```bash
+   npm install
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Отримайте API Read Access Token на [TMDB](https://www.themoviedb.org/settings/api) і створіть файл `.env` у кореневій папці проєкту:
+
+   ```env
+   VITE_TMDB_TOKEN=your_tmdb_access_token
+   ```
+
+3. Запустіть сервер розробки:
+
+   ```bash
+   npm run dev
+   ```
+
+## Скрипти
+
+| Команда           | Опис                            |
+| ----------------- | ------------------------------- |
+| `npm run dev`     | Запустити сервер розробки       |
+| `npm run build`   | Перевірити типи та зібрати      |
+| `npm run preview` | Переглянути попередній варіант  |
+| `npm run lint`    | Запустити ESLint                |
+
+## Структура проєкту
 
 ```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+src/
+├── components/
+│   ├── App/
+│   ├── SearchBar/
+│   ├── MovieGrid/
+│   ├── MovieModal/
+│   ├── Loader/
+│   └── ErrorMessage/
+├── services/
+│   └── movieService.ts  
+└── types/
+    └── movie.ts          
 ```
