@@ -13,19 +13,16 @@ export interface MoviesResponse {
 }
 
 export async function fetchMovies(query: string): Promise<Movie[]> {
-  const response = await axios.get<MoviesResponse>(
-    `${BASE_URL}/search/movie`,
-    {
-      params: {
-        query,
-        language: "uk-UA",
-        page: 1,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const response = await axios.get<MoviesResponse>(`${BASE_URL}/search/movie`, {
+    params: {
+      query,
+      language: "uk-UA",
+      page: 1,
     },
-  );
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return response.data.results;
 }
